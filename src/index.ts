@@ -1,14 +1,3 @@
-import puppeteer from 'puppeteer'
+import scraping from './scraping'
 
-// Documentação do pupprtter -> https://pptr.dev/
-// te amo vitão❤️
-
-async function main () {
-  const browser = await puppeteer.launch()
-  const page = await browser.newPage()
-  await page.goto('')
-
-  await browser.close()
-}
-
-main()
+scraping()
