@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./database.db"
+}
+
+model Line {
+  id          Int     @id     @default(autoincrement())
+  name        String 
+
+  routes      Route[]
+  bus_running BusRunning[]
+
+  @@map("lines")
+}
+
+model Route {
+  id            Int     @id     @default(autoincrement())
+
+  place         String
+  streats_list  String
+
+  lineId        Int
+  line          Line    @relation(fields: [lineId], references: [id])
+
+  @@map("routes")
+}
+
+model BusRunning {
+  id                Int     @id     @default(autoincrement())
+
+  running_day_type  String
+  district_time     String
+  terminal_time     String
+
+  lineId            Int
+  line              Line    @relation(fields: [lineId], references: [id])
+
+  @@map("bus_running")
+}
