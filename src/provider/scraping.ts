@@ -1,10 +1,10 @@
 // Documentação do pupprtter -> https://pptr.dev/
 // te amo vitão❤️
 
-import { client } from '../prisma'
-
 import puppeteer from 'puppeteer-extra'
 import StealthPlugin from 'puppeteer-extra-plugin-stealth'
+
+import { client } from '../prisma'
 puppeteer.use(StealthPlugin())
 
 async function scraping () {
@@ -19,18 +19,12 @@ async function scraping () {
     return result.map((value) => value.getAttribute('data-value'))
   })
 
-  values.map(async (value) => {
+  values.forEach(async (value) => {
     const page = await browser.newPage()
     await page.goto(amtuUrl + value)
+
     const lineName = await page.evaluate(el => el.innerHTML, await page.$('.ng-binding'))
   })
-
-  // values.forEach(async (value) => {
-  //   setInterval(async () => {
-  //     console.log(lineName)
-  //     await browser.close()
-  //   }, 15000)
-  // })
 }
 
 export default scraping
