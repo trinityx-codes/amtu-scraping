@@ -22,9 +22,11 @@ async function scraping () {
 
   setInterval(async () => {
     const lineName = await page.evaluate(el => el.innerHTML, await page.$('.ng-binding'))
+
     const utilDay = await page.$$eval('div.first a', (result) => {
-      return result.map((value) => value.innerHTML)
+      return result.map((value) => value.textContent.replace(/[\t\n]/g, ''))
     })
+
     console.log(utilDay)
   }, 5000)
 }
