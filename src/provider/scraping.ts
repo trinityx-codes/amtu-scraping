@@ -27,7 +27,13 @@ async function scraping () {
       return result.map((value) => value.textContent.replace(/[\t\n]/g, ''))
     })
 
-    console.log(utilDay)
+    const saturday = await page.$$eval('div.middle a', (result) => {
+      return result.map((value) => value.textContent.replace(/[\t\n]/g, ''))
+    })
+
+    const sunday = await page.$$eval('div.last a', (result) => {
+      return result.map((value) => value.textContent.replace(/[\t\n]/g, ''))
+    })
   }, 5000)
 }
 
