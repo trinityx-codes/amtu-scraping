@@ -4,7 +4,6 @@
 import puppeteer from 'puppeteer-extra'
 import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 
-import { client } from '../prisma'
 puppeteer.use(StealthPlugin())
 
 async function scraping () {
@@ -19,12 +18,15 @@ async function scraping () {
     return result.map((value) => value.getAttribute('data-value'))
   })
 
-  values.forEach(async (value) => {
-    const page = await browser.newPage()
-    await page.goto(amtuUrl + value)
+  await page.goto(amtuUrl + '8etr') // value
 
+  setInterval(async () => {
     const lineName = await page.evaluate(el => el.innerHTML, await page.$('.ng-binding'))
-  })
+    const utilDay = await page.$$eval('div.first a', (result) => {
+      return result.map((value) => value.innerHTML)
+    })
+    console.log(utilDay)
+  }, 5000)
 }
 
 export default scraping
